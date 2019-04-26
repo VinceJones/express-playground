@@ -1,5 +1,6 @@
 import * as path from 'path';
 import fs = require('fs');
+import LoggerService from './LoggerService';
 import RoutesInterface from '../interface/RoutesInterface';
 
 class RouteService {
@@ -15,7 +16,7 @@ class RouteService {
 
     private _getRoutes(server: Function): void {
         fs.readdir(this._routesDir, (err, files) => {
-            if (err) return console.error("Unable to scan directory: ", err);
+            if (err) return LoggerService.handleError(`Unable to scan directory: ${err}`);
             files.filter(f => !f.includes(".js.map"))
                 .map((file: string) => this._registerRoute(file));
         });

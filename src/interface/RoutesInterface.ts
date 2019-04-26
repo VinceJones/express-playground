@@ -1,4 +1,5 @@
 interface RoutesInterface {
+    _route: string;
     register: Function;
 }
 
