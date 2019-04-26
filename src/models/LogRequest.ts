@@ -6,6 +6,7 @@ class LogRequest implements LogInterface {
     public message: string = "";
     public time: number = 0;
     public headers: string = "";
+    public body: string = "";
     private method: string = "";
     private protocol: string = "";
     private host: string = "";
@@ -15,9 +16,9 @@ class LogRequest implements LogInterface {
     private connection: string = "";
 
     constructor(req: express.Request) {
-
         this.time = new Date().getTime();
         this.headers = JSON.stringify(req.headers);
+        this.body = JSON.stringify(req.body);
         this.method = req.method;
         this.protocol = req.protocol;
         this.host = req.headers.host;
@@ -30,7 +31,7 @@ class LogRequest implements LogInterface {
     }
 
     public setMessage() {
-        this.message = `${this.time} ${this.method} ${this.protocol}://${this.host}${this.route} ${this.userAgent} ${this.cacheControl} ${this.connection}`;
+        this.message = `${this.time} ${this.method} ${this.protocol}://${this.host}${this.route} ${this.userAgent} ${this.cacheControl} ${this.connection}\n    Headers: ${this.headers}\n    Body: ${this.body}`;
     }
 }
 

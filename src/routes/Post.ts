@@ -1,6 +1,5 @@
 import * as express from "express";
 import RoutesInterface from '../interface/RoutesInterface';
-import loggerService from '../service/LoggerService';
 
 class Post implements RoutesInterface {
 
@@ -14,9 +13,7 @@ class Post implements RoutesInterface {
     }
 
     private _get(req: express.Request, res: express.Response, next: express.NextFunction): express.Response {
-        var responseObj = {success: "GET"}
-        loggerService.handleLog(JSON.stringify(responseObj));
-        return res.send(responseObj);
+        return res.send({success: "GET"});
     }
 
     private _put(req: express.Request, res: express.Response, next: express.NextFunction): express.Response {
