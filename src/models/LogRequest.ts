@@ -1,5 +1,5 @@
-import LogInterface from "../interface/LogInterface";
 import * as express from "express";
+import LogInterface from "../interface/LogInterface";
 
 class LogRequest implements LogInterface {
 
@@ -31,7 +31,7 @@ class LogRequest implements LogInterface {
     }
 
     public setMessage() {
-        this.message = `${this.time} ${this.method} ${this.protocol}://${this.host}${this.route} ${this.userAgent} ${this.cacheControl} ${this.connection}\n    Headers: ${this.headers}\n    Body: ${this.body}`;
+        this.message = `${this.time} ${this.method} ${this.protocol}://${this.host}${this.route} ${this.userAgent} ${this.cacheControl} ${this.connection}\n Headers: ${this.headers}\n Body: ${this.body}`; // tslint:disable-line: max-line-length
     }
 }
 

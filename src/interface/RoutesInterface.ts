@@ -1,6 +1,6 @@
 interface RoutesInterface {
-    _route: string;
-    register: Function;
+    route: string;
+    register: any;
 }
 
 export default RoutesInterface;

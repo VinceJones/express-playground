@@ -1,42 +1,41 @@
 import * as express from "express";
-import * as path from 'path';
-import LogRequest from "../models/LogRequest";
-import LogError from "../models/LogError";
+import fs = require("fs");
+import * as path from "path";
 import Log from "../models/Log";
-
-const fs = require('fs');
+import LogError from "../models/LogError";
+import LogRequest from "../models/LogRequest";
 
 class LoggerService {
 
-    static handleRequest(req: express.Request, res: express.Response, next: express.NextFunction): void {
-        var log = new LogRequest(req);
+    public static handleRequest(req: express.Request, res: express.Response, next: express.NextFunction): void {
+        const log = new LogRequest(req);
         LoggerService.emit(log.message);
         next();
     }
 
-    static handleError(message: string): void {
-        var log = new LogError(message)
+    public static handleError(message: string): void {
+        const log = new LogError(message)
         LoggerService.emit(log.message);
     }
 
-    static handleLog(message: string): void {
-        var log = new Log(message)
+    public static handleLog(message: string): void {
+        const log = new Log(message)
         LoggerService.emit(log.message);
     }
 
-    static emit(message: string): void {
+    public static emit(message: string): void {
 
-        var message = message + "\n";
-        var _logDir = path.join(__dirname, "../../logs/log.txt");
-        var stat = fs.statSync(_logDir);
+        message = message + "\n";
+        const logDir = path.join(__dirname, "../../logs/log.txt");
+        const stat = fs.statSync(logDir);
 
         if (false === stat.isFile()) {
-            fs.closeSync(fs.openSync(_logDir, 'w'));    
+            fs.closeSync(fs.openSync(logDir, "w"));
         }
-        
-        fs.appendFile(_logDir, message, (err: any) => {
-            if(err) console.error(err);
-        });   
+
+        fs.appendFile(logDir, message, (err: any) => {
+            if (err) { console.error(err); }
+        });
     }
 }
 

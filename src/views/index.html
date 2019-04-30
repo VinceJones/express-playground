@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Triangle Playground</title>
+    <style>
+        body {
+            background: black;
+        }
+
+        main {
+            margin: 200px auto;
+            width: 600px;
+        }
+
+        .grid {
+            font-size: 76%;
+            line-height: 1.2;
+            background: transparent;
+            display: grid;
+            grid-template-columns: repeat(6, 100px);
+            grid-template-rows: 100px 100px 100px 100px 100px 100px;
+            grid-gap: 0px;
+            width: 600px;
+            margin: 0;
+        }
+        
+        .triangle {
+            width: 0;
+            height: 0;
+            border: 100px solid transparent;
+        }
+
+        .triangle:hover {
+            border: 200px solid transparent;
+            grid-row: 2 / span 2;
+            grid-column: 2 / span 2;
+            z-index: 5;
+        }
+
+        .triangle-top,
+        .triangle-top:hover {
+            border-top-color: orange;
+            
+        }
+        .triangle-top {
+            grid-row: 2 / span 2;
+            grid-column: 3 / span 2;
+            z-index: 1;
+        }
+
+        .triangle-right,
+        .triangle-right:hover {
+            border-right-color: yellowgreen;
+        }
+        .triangle-right {
+            grid-row: 3 / span 2;
+            grid-column: 4 / span 2;
+            z-index: 2;
+        }
+        
+        .triangle-bottom,
+        .triangle-bottom:hover {
+            border-bottom-color: rebeccapurple;
+        }
+        .triangle-bottom {
+            grid-row: 4 / span 2;
+            grid-column: 3 / span 2;
+            z-index: 3;
+        }
+
+        .triangle-left,
+        .triangle-left:hover {
+            border-left-color: red;
+        }
+        .triangle-left {
+            grid-row: 3 / span 2;
+            grid-column: 2 / span 2;
+            z-index: 4;
+        }
+        
+    </style>
+</head>
+<body>
+    <main>
+        <div class="grid">
+            <a href="#a" class="triangle triangle-top"></a>
+            <a href="#b" class="triangle triangle-right"></a>
+            <a href="#c" class="triangle triangle-bottom"></a>
+            <a href="#d" class="triangle triangle-left"></a>
+        </div>
+    </main>
+</body>
+</html>

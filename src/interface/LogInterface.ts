@@ -1,7 +1,7 @@
 interface LogInterface {
     message: string;
     time: number;
-    setMessage: Function;
+    setMessage: any;
 }
 
 export default LogInterface;

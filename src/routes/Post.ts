@@ -1,15 +1,15 @@
 import * as express from "express";
-import RoutesInterface from '../interface/RoutesInterface';
+import RoutesInterface from "../interface/RoutesInterface";
 
 class Post implements RoutesInterface {
 
-    public _route: string = "/";
+    public route: string = "/";
 
     public register(server: any): void {
-        server.get(this._route, this._get);
-        server.put(this._route, this._put);
-        server.post(this._route, this._post);
-        server.delete(this._route, this._delete);
+        server.get(this.route, this._get);
+        server.put(this.route, this._put);
+        server.post(this.route, this._post);
+        server.delete(this.route, this._delete);
     }
 
     private _get(req: express.Request, res: express.Response, next: express.NextFunction): express.Response {
