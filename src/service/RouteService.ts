@@ -17,14 +17,10 @@ export default class RouteService {
                 return LoggerService.handleError(`Unable to scan directory: ${err}`);
             }
 
-            this.loadRoutes(files);
+            files.filter((fileName: string) => !fileName.includes(".js.map"))
+                .map((fileName: string) => require(`../routes/${fileName}`).default)
+                .sort((objA: RoutesInterface, objB: RoutesInterface) => objA.loadOrder - objB.loadOrder)
+                .map((route: RoutesInterface) => route.register(this.app));
         });
-    }
-
-    public static loadRoutes(files: string[]): void {
-        files.filter((fileName: string) => !fileName.includes(".js.map"))
-            .map((fileName: string) => require(`../routes/${fileName}`).default)
-            .sort((objA: RoutesInterface, objB: RoutesInterface) => objA.loadOrder - objB.loadOrder)
-            .map((route: RoutesInterface) => route.register(this.app));
     }
 }

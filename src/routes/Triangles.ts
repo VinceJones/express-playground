@@ -1,6 +1,6 @@
 import * as express from "express";
 import * as path from "path";
-import { RoutesInterface }  from "../interface/RoutesInterface";
+import { RoutesInterface } from "../interface/RoutesInterface";
 
 class Triangles implements RoutesInterface {
 

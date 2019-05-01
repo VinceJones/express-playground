@@ -31,7 +31,7 @@ export default class LogRequest extends Log {
 
     private _buildMessage() {
         const url = `${this.protocol}://${this.host}${this.route}`;
-        return `${this.time} ${this.method} ${url} ${this.userAgent} ${this.cacheControl} ${this.connection}\n
+        return `${this.method} ${url} ${this.userAgent} ${this.cacheControl} ${this.connection}\n
             Headers: ${this.headers}\n
             Body: ${this.body}`;
     }
