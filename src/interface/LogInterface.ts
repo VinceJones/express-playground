@@ -1,7 +1,6 @@
-interface LogInterface {
-    message: string;
+export interface LogInterface {
     time: number;
-    setMessage: any;
+    messageType: string;
+    message: string;
+    setMessage: (message: string) => void;
 }
-
-export default LogInterface;

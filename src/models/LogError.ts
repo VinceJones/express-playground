@@ -1,5 +1,5 @@
 import Log from "./Log";
 
-class LogError extends Log {}
-
-export default LogError;
+export default class LogError extends Log {
+    public messageType: string = "ERROR";
+}

@@ -1,18 +1,20 @@
-import LogInterface from "../interface/LogInterface";
+import { LogInterface } from "../interface/LogInterface";
 
-class Log implements LogInterface {
+export default class Log implements LogInterface {
 
+    public time: number = this.currentTime;
+    public messageType: string = "NOTICE";
     public message: string = "";
-    public time: number = 0;
 
     constructor(message: string) {
-        this.time = new Date().getTime();
         this.setMessage(message);
     }
 
+    get currentTime() {
+        return new Date().getTime();
+    }
+
     public setMessage(message: string) {
-        this.message = `${this.time} ${message}`;
+        this.message = `<${this.messageType}> ${this.time} ${message}`;
     }
 }
-
-export default Log;

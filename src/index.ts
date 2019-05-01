@@ -1,8 +1,8 @@
-import bodyParser = require("body-parser");
-import express = require("express");
+import * as bodyParser from "body-parser";
+import * as express from "express";
 import * as path from "path";
 import loggerService from "./service/LoggerService";
-import routeService from "./service/RouteService"
+import routeService from "./service/RouteService";
 
 const port = process.env.PORT || 5000;
 
@@ -12,6 +12,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 app.use(loggerService.handleRequest);
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
-
 routeService.buildRoutes(app, path.join(__dirname, "../"));
+
+app.listen(port, () => console.log(`Listening on port ${port}`));

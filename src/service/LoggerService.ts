@@ -1,11 +1,11 @@
 import * as express from "express";
-import fs = require("fs");
+import * as fs from "fs";
 import * as path from "path";
 import Log from "../models/Log";
 import LogError from "../models/LogError";
 import LogRequest from "../models/LogRequest";
 
-class LoggerService {
+export default class LoggerService {
 
     public static handleRequest(req: express.Request, res: express.Response, next: express.NextFunction): void {
         const log = new LogRequest(req);
@@ -14,12 +14,12 @@ class LoggerService {
     }
 
     public static handleError(message: string): void {
-        const log = new LogError(message)
+        const log = new LogError(message);
         LoggerService.emit(log.message);
     }
 
     public static handleLog(message: string): void {
-        const log = new Log(message)
+        const log = new Log(message);
         LoggerService.emit(log.message);
     }
 
@@ -34,11 +34,14 @@ class LoggerService {
         }
 
         fs.appendFile(logDir, message, (err: any) => {
-            if (err) { console.error(err); }
+            if (!err) {
+                return;
+            }
+
+            console.error(err);
+            throw err;
         });
     }
 }
 
 console.log = LoggerService.handleLog;
-
-export default LoggerService;

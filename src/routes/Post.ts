@@ -1,8 +1,9 @@
 import * as express from "express";
-import RoutesInterface from "../interface/RoutesInterface";
+import { RoutesInterface } from "../interface/RoutesInterface";
 
 class Post implements RoutesInterface {
 
+    public loadOrder: number = 1;
     public route: string = "/";
 
     public register(server: any): void {

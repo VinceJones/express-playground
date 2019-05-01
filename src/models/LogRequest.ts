@@ -1,10 +1,8 @@
 import * as express from "express";
-import LogInterface from "../interface/LogInterface";
+import Log from "./Log";
 
-class LogRequest implements LogInterface {
+export default class LogRequest extends Log {
 
-    public message: string = "";
-    public time: number = 0;
     public headers: string = "";
     public body: string = "";
     private method: string = "";
@@ -16,7 +14,8 @@ class LogRequest implements LogInterface {
     private connection: string = "";
 
     constructor(req: express.Request) {
-        this.time = new Date().getTime();
+        super("");
+
         this.headers = JSON.stringify(req.headers);
         this.body = JSON.stringify(req.body);
         this.method = req.method;
@@ -27,12 +26,13 @@ class LogRequest implements LogInterface {
         this.cacheControl = req.headers["cache-control"];
         this.connection = req.headers.connection;
 
-        this.setMessage();
+        this.setMessage(this._buildMessage());
     }
 
-    public setMessage() {
-        this.message = `${this.time} ${this.method} ${this.protocol}://${this.host}${this.route} ${this.userAgent} ${this.cacheControl} ${this.connection}\n Headers: ${this.headers}\n Body: ${this.body}`; // tslint:disable-line: max-line-length
+    private _buildMessage() {
+        const url = `${this.protocol}://${this.host}${this.route}`;
+        return `${this.time} ${this.method} ${url} ${this.userAgent} ${this.cacheControl} ${this.connection}\n
+            Headers: ${this.headers}\n
+            Body: ${this.body}`;
     }
 }
-
-export default LogRequest;

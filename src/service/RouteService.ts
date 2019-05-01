@@ -1,32 +1,30 @@
-import fs = require("fs");
+import * as express from "express";
+import * as fs from "fs";
 import * as path from "path";
-import RoutesInterface from "../interface/RoutesInterface";
+import { RoutesInterface } from "../interface/RoutesInterface";
 import LoggerService from "./LoggerService";
 
-class RouteService {
-    private routesDir: string = "";
-    private server: any = null;
+export default class RouteService {
+    public static routesDir: string = "";
+    public static app: express.Application = null;
 
-    public buildRoutes(server: any, rootDir: string): void {
+    public static buildRoutes(app: express.Application, rootDir: string): void {
         this.routesDir = path.join(rootDir, "/build/routes");
-        this.server = server;
+        this.app = app;
 
-        this._getRoutes(server);
-    }
-
-    private _getRoutes(server: any): void {
         fs.readdir(this.routesDir, (err, files) => {
-            if (err) { return LoggerService.handleError(`Unable to scan directory: ${err}`); }
-            files.filter(f => !f.includes(".js.map"))
-                .map((file: string) => this._registerRoute(file));
+            if (err) {
+                return LoggerService.handleError(`Unable to scan directory: ${err}`);
+            }
+
+            this.loadRoutes(files);
         });
     }
 
-    private _registerRoute(file: string): void {
-        const fileExport = require(`../routes/${file}`);
-        const loadedModule = fileExport.default as RoutesInterface;
-        loadedModule.register(this.server);
+    public static loadRoutes(files: string[]): void {
+        files.filter((fileName: string) => !fileName.includes(".js.map"))
+            .map((fileName: string) => require(`../routes/${fileName}`).default)
+            .sort((objA: RoutesInterface, objB: RoutesInterface) => objA.loadOrder - objB.loadOrder)
+            .map((route: RoutesInterface) => route.register(this.app));
     }
 }
-
-export default new RouteService();
